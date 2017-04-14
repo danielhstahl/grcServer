@@ -1,0 +1,30 @@
+{
+  "name": "mrmvapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phillyfan1138/grcServer.git"
+  },
+  "author": "Daniel Stahl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phillyfan1138/grcServer/issues"
+  },
+  "homepage": "https://github.com/phillyfan1138/grcServer#readme",
+  "dependencies": {
+    "activedirectory": "^0.7.2",
+    "body-parser": "^1.17.1",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.15.2",
+    "jest": "^19.0.2",
+    "sqlite3": "^3.1.8",
+    "uuid": "^3.0.1",
+    "winston": "^2.3.1"
+  }
+}
