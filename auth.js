@@ -4,7 +4,7 @@ const sql=require('./testSql')
 const configUrl='ldap://corp.rgbk.com';
 const config = { url: configUrl,
                baseDN: 'dc=domain,dc=com'}
-const authenticate=require('express-authentication')
+//const authenticate=require('express-authentication')
 
 const customParser=function(entry, raw, callback){
     if (raw.hasOwnProperty("thumbnailPhoto")){
@@ -86,20 +86,32 @@ const authenticate=(userid, password, cb)=>{
     })
 }
 
-const basicAuth=(req, res, next)=>{
-    req.challenge = req.get('Authorization');
-    console.log(req.authentication)
-    sql.getUserFromKey(req.authentication, (err, res)=>{
-        req.authenticated=res.length>0?true:false
-        req.group=res[0].group
-        next();
-    })
-}
-const handleGroups=(groups)=>{
-    groups
-    return basicAuth
+const hasLengthGreaterThanZero=(arr)=>arr.length>0?true:false
+
+const checkGroup=(allowedGroups, group)=>hasLengthGreaterThanZero(allowedGroups.filter((val)=>val===group ))
+
+const handleGroups=(allowedGroups)=>{
+    return (req, res, next)=>{
+        req.challenge = req.get('Authorization');
+        console.log(req.authentication)
+        if(!req.authentication){
+            req.authenticated=false;
+            next();
+        }
+        else if(req.group){ //handled by MRMV's web app
+            req.authenticated=checkGroup(allowedGroups, req.group)
+            next()
+        }
+        else{ //handled by Rest API
+            sql.getUserFromKey(req.authentication, (err, result)=>{
+                const doesKeyExist=hasLengthGreaterThanZero(result)
+                req.authenticated=doesKeyExist?checkGroup(allowedGroups, result[0].ADGroup):false
+                next();
+            })
+        }
+    }
 }
 
 
 module.exports.authenticate=authenticate;
-module.exports.basicAuth=basicAuth;
+module.exports.handleGroups=handleGroups;

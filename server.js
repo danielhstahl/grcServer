@@ -104,7 +104,7 @@ app.get("/validationRcus", (req, res)=>{ //in final state use validation id.  Th
         res.send(result)
     })
 })
-app.get("/validationSkills", authentication.required(), (req, res)=>{ 
+app.get("/validationSkills", auth.handleGroups(["MRMV"]), (req, res)=>{ 
     winston.info('called /validationSkills')
     sql.getValidationSkills(req.query.validationId, (err, result)=>{
         if(err){
