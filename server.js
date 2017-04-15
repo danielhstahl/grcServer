@@ -18,12 +18,6 @@ winston.add(winston.transports.File, { filename: 'logfile.log' });
 
 app.use(bodyParser.json());
 
-/*app.use((req, res, next)=>{
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});*/
-console.log(process.env.NODE_ENV)
 const transformNormalizedToKey=(associates)=>{
     associates.sort((a, b)=>a.id<b.id?-1:1);
     return associates.reduce((aggr, curr, index, arr)=>{
@@ -36,6 +30,9 @@ const transformNormalizedToKey=(associates)=>{
         }
         return aggr
     }, [])
+}
+if(process.env.NODE_ENV==='test'){
+    module.exports.transformNormalizedToKey=transformNormalizedToKey;
 }
 
 

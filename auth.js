@@ -66,8 +66,7 @@ const authenticate=(userid, password, cb)=>{
                     'lockoutTime', 'whenCreated', 'pwdLastSet', 'userAccountControl',
                     'employeeID', 'sn', 'givenName', 'initials', 'cn', 'displayName',
                     'comment', 'description', 'thumbnailPhoto'
-                ],
-                    
+                ],    
             }, entryParser:customParser}
         ad=new AD(authConfig);
         return wrapFindUser(ad, userid)

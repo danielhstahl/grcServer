@@ -8,8 +8,8 @@ it('removes from session automatically', (done)=>{
     const time2=150; //.15 second
     const id=inRamDb.addToSession("anotherhashedpassword", time)
     setTimeout(()=>{
-        console.log("Got here");
-        expect(inRamDb.getFromSession(id)).toBeNull()
+        console.log(inRamDb.getFromSession(id));
+        expect(inRamDb.getFromSession(id)).toBeUndefined()
         done()
     }, time2)
 })
