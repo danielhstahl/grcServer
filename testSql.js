@@ -215,9 +215,24 @@ const getTestSelection=(cb)=>{
 
 }
 
+const CreateGroupKey=`CREATE TABLE GroupKey 
+(ADGroup varchar(20) not null, key varchar(30) not null, dateCreated DATETIME not null, CONSTRAINT pk_userkey PRIMARY KEY(ADGroup, key, datecreated)`
+
+const getUserFromKey=(key, cb)=>{
+    db.all(`SELECT ADGroup, Key FROM (SELECT ADGroup, MAX(dateCreated) as mxDate
+    FROM groupKey  GROuP BY ADGroup) t1 INNER JOIN GroupKey t2
+    ON t1.AdGroup=t2.AdGroup AND t1.mxDate=t2.DateCreated
+    WHERE KEy=?
+    `, [key], cb)
+}
+const createNewKey=(key, group, cb)=>{
+    db.run(`INSERT INTO groupKEy (AdGroup, Key, dateCreated) VALUES (?, ?, datetime('now'))`, [group, key], cb);
+}
+
 
 db.serialize(()=>{
   db.exec(CreateAssociates);
+  db.exec(CreateUserKey);
   db.exec(CreateSkillCategory);
   db.exec(CreateSkills);
   db.exec(CreateAssociateSkills);

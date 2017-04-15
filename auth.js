@@ -1,9 +1,10 @@
 'use strict'
 const AD = require('activedirectory')
+const sql=require('./testSql')
 const configUrl='ldap://corp.rgbk.com';
 const config = { url: configUrl,
                baseDN: 'dc=domain,dc=com'}
-
+const authenticate=require('express-authentication')
 
 const customParser=function(entry, raw, callback){
     if (raw.hasOwnProperty("thumbnailPhoto")){
@@ -84,4 +85,21 @@ const authenticate=(userid, password, cb)=>{
         return cb(err, null);
     })
 }
+
+const basicAuth=(req, res, next)=>{
+    req.challenge = req.get('Authorization');
+    console.log(req.authentication)
+    sql.getUserFromKey(req.authentication, (err, res)=>{
+        req.authenticated=res.length>0?true:false
+        req.group=res[0].group
+        next();
+    })
+}
+const handleGroups=(groups)=>{
+    groups
+    return basicAuth
+}
+
+
 module.exports.authenticate=authenticate;
+module.exports.basicAuth=basicAuth;

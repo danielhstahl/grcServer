@@ -7,9 +7,10 @@ const inRamDb=require('./inRamDb');
 const addToSession=inRamDb.addToSession
 const removeFromSession=inRamDb.removeFromSession
 const getFromSession=inRamDb.getFromSession
-const userAttributes=require('./auth')
+const auth=require('./auth')
 const sql=require('./testSql.js')
 const jsonParser = bodyParser.json();
+
 let app = express();
 
 const port='3001';
@@ -103,7 +104,7 @@ app.get("/validationRcus", (req, res)=>{ //in final state use validation id.  Th
         res.send(result)
     })
 })
-app.get("/validationSkills", (req, res)=>{ 
+app.get("/validationSkills", authentication.required(), (req, res)=>{ 
     winston.info('called /validationSkills')
     sql.getValidationSkills(req.query.validationId, (err, result)=>{
         if(err){
@@ -124,12 +125,10 @@ app.post("/writeValidationRcus",  (req, res)=>{ //in final state use validation 
         winston.info('return /writeValidationRcus')
         res.sendStatus(200);
     })
-    
-    
 })
 app.post('/login', (req, res)=>{
     winston.info('called /login')
-    userAttributes.authenticate(req.body.user, req.body.password, (err, user)=>{
+    auth.authenticate(req.body.user, req.body.password, (err, user)=>{
         if(err){
             winston.error(`${err.message}, ${req.body.user}`)
         }
