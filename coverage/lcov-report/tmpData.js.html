@@ -1,0 +1,1646 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for tmpData.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> tmpData.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/8</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const RCUS=[
+    {
+        process:"Design",
+        risk:"Inappropriate consideration of alternative design",
+        processStep:0,
+        riskStep:0,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"Assess Alternative Design"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate design for the purpose",
+        processStep:0,
+        riskStep:1,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"MRMV assesses purpose and design"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate design for regulations/GAAP/etc",
+        processStep:0,
+        riskStep:2,
+        controls:"N/A",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assesses design with respect to relevant regulations"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate design for the portfolio",
+        processStep:0,
+        riskStep:3,
+        controls:"N/A",
+        workpaper:1,
+        MRMVResponsibility:"MRMV assesses model as it pertains to the portfolio"
+    }
+    ,
+    {
+        process:"Design",
+        risk:"Conflicting assumptions between models",
+        processStep:0,
+        riskStep:4,
+        controls:"N/A",
+        workpaper:1,
+        MRMVResponsibility:"MRMV assesses interrelated model risk"
+    },
+    {
+        process:"Design",
+        risk:"Conflicting assumptions inside model",
+        processStep:0,
+        riskStep:5,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"MRMV assesses assumptions for conflicts"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate assumptions",
+        processStep:0,
+        riskStep:6,
+        controls:"Documentation of rationale of assumptions",
+        workpaper:2,
+        MRMVResponsibility:"Assess documentation for appropriate rationale"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate assumptions",
+        processStep:0,
+        riskStep:7,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"MRMV assesses quality of assumptions"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate variables (irrelevant, or exclusion of relevant variable)",
+        processStep:0,
+        riskStep:8,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"MRMV assesses quality of variable selection"
+    },
+    {
+        process:"Design",
+        risk:"Inappropriate use of enterprise resources",
+        processStep:0,
+        riskStep:9,
+        controls:"SLA with development area",
+        workpaper:1,
+        MRMVResponsibility:"Receive copy of SLA"
+    },
+    {
+        process:"Calibration",
+        risk:"Code Error",
+        processStep:1,
+        riskStep:0,
+        controls:"Unit Testing",
+        workpaper:2,
+        MRMVResponsibility:"Test adequacy of unit testing.  If no controls, write control gap issue"
+    },
+    {
+        process:"Calibration",
+        risk:"Code Error",
+        processStep:1,
+        riskStep:1,
+        controls:"Versioning",
+        workpaper:2,
+        MRMVResponsibility:"Test adequacy of dev environment.  If no controls, write control gap issue"
+    },
+    {
+        process:"Calibration",
+        risk:"Segmentation of calibration data is inappropriate (eg, not granular enough)",
+        processStep:1,
+        riskStep:2,
+        controls:"Documentation of rationale for segmentation",
+        workpaper:2,
+        MRMVResponsibility:"Assess quality of segmentation documentation"
+    },
+    {
+        process:"Calibration",
+        risk:"Segmentation of calibration data is inappropriate (eg, not granular enough)",
+        processStep:1,
+        riskStep:3,
+        controls:"Evidence of appropriateness of segmentation",
+        workpaper:2,
+        MRMVResponsibility:"Assess quality of evidence.  If no evidence, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration",
+        risk:"Variable selection chosen using \"data mining\" technique",
+        processStep:1,
+        riskStep:4,
+        controls:"N/A",
+        workpaper:2,
+        MRMVResponsibility:"MRMV assesses quality of documentation and evidence."
+    },
+    {
+        process:"Calibration",
+        risk:"Variables are statistically inappropriate (stationary/non stationary/irrelevant)",
+        processStep:1,
+        riskStep:5,
+        controls:"Stationarity tests, other variable tests, etc",
+        workpaper:2,
+        MRMVResponsibility:"Assess quality of testing.  If inadequate testing, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration",
+        risk:"Data Quality (Nulls, etc)",
+        processStep:1,
+        riskStep:6,
+        controls:"Analysis and consideration of data quality",
+        workpaper:3,
+        MRMVResponsibility:"Test adequacy of analysis.  If inadequate, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration",
+        risk:"Data Integrity (Incorrect data)",
+        processStep:1,
+        riskStep:7,
+        controls:"Recon controls or meta data/schema",
+        workpaper:3,
+        MRMVResponsibility:"Test adequacy of controls.  If inadequate, perform recon and write issue."
+    },
+    {
+        process:"Calibration",
+        risk:"Data appropriateness (Data sources not applicable to model)",
+        processStep:1,
+        riskStep:8,
+        controls:"Documentation of sources and explanation for why the source is adequate",
+        workpaper:3,
+        MRMVResponsibility:"Assess quality of documentation."
+    },
+    {
+        process:"Calibration",
+        risk:"Data appropriateness (Proxy data not relevant enough to model)",
+        processStep:1,
+        riskStep:9,
+        controls:"Testing of appropriateness of proxy data ",
+        workpaper:3,
+        MRMVResponsibility:"Assess quality of testing.  If inadequate testing, perform independent testing and write issue."
+    },{
+        process:"Calibration",
+        risk:"Data appropriateness (Proxy data not relevant enough to model)",
+        processStep:1,
+        riskStep:10,
+        controls:"Documented rationale for the appropriateness (where testing is inappropriate)",
+        workpaper:3,
+        MRMVResponsibility:"Assess quality of documentation."
+    },
+    {
+        process:"Calibration",
+        risk:"Upstream inputs have variances which may impact model performance",
+        processStep:1,
+        riskStep:11,
+        controls:"Sensitivity analysis of key inputs",
+        workpaper:3,
+        MRMVResponsibility:"Test adequacy of controls.  If inadequate, perform sensitivity analysis and write issue."
+    },
+    {
+        process:"Calibration Diagnostics",
+        risk:"Design not adequate for data",
+        processStep:2,
+        riskStep:0,
+        controls:"Evidence of effective design (residual plots, etc)",
+        workpaper:2,
+        MRMVResponsibility:"Test adequacy of analysis.  If inadequate, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration Diagnostics",
+        risk:"Design not adequate for data",
+        processStep:2,
+        riskStep:1,
+        controls:"Hold out sample testing",
+        workpaper:5,
+        MRMVResponsibility:"Test adequacy of analysis.  If inadequate, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration Diagnostics",
+        risk:"Design not adequate for data",
+        processStep:2,
+        riskStep:2,
+        controls:"Assessment of business intuition vs model results",
+        workpaper:2,
+        MRMVResponsibility:"Test adequacy of analysis.  If inadequate, perform independent testing and write issue."
+    },
+    {
+        process:"Calibration Diagnostics",
+        risk:"Design not adequate for data",
+        processStep:2,
+        riskStep:3,
+        controls:"Benchmarking to more familiar models",
+        workpaper:5,
+        MRMVResponsibility:"Test adequacy of benchmarking.  If inadequate, independently benchmark."
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Data schema is different than Dev",
+        processStep:3,
+        riskStep:0,
+        controls:"N/A",
+        workpaper:4,
+        MRMVResponsibility:"Ensure use of same schema in production as in dev"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Data integrity",
+        processStep:3,
+        riskStep:1,
+        controls:"Recon controls or meta data/schema",
+        workpaper:4,
+        MRMVResponsibility:"Test adequacy of controls.  If inadequate, perform recon and write issue"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Code errors",
+        processStep:3,
+        riskStep:2,
+        controls:"Versioning software/code control",
+        workpaper:4,
+        MRMVResponsibility:"Test adequacy of environment.  If no controls, write control gap issue"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Code errors",
+        processStep:3,
+        riskStep:3,
+        controls:"Unit Testing (run every time pushed to production)",
+        workpaper:4,
+        MRMVResponsibility:"Assess unit tests, view logs to ensure that tests are run every time"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Code errors",
+        processStep:3,
+        riskStep:4,
+        controls:"N/A",
+        workpaper:4,
+        MRMVResponsibility:"MRMV independently replicates the model output"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Key person risk/lack of transparency/unmaintainable code",
+        processStep:3,
+        riskStep:5,
+        controls:"Documentation of code (comments, organized code, etc)",
+        workpaper:4,
+        MRMVResponsibility:"Assess quality of code (eg assessing comments, legibility)"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Inefficient code or algorithms",
+        processStep:3,
+        riskStep:6,
+        controls:"N/A",
+        workpaper:4,
+        MRMVResponsibility:"MRMV assesses alternative algorithms"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Implementation different than dev/test",
+        processStep:3,
+        riskStep:7,
+        controls:"Hash of code, Docker, anything that proves that the two environments are the same",
+        workpaper:4,
+        MRMVResponsibility:"Ensure that controls exist (should be self auditing)"
+    },
+    {
+        process:"Implementation Structure",
+        risk:"Infrastructure inappropriate for demonstrating continued accuracy of output",
+        processStep:3,
+        riskStep:8,
+        controls:"N/A",
+        workpaper:4,
+        MRMVResponsibility:"Assess infrastructure.  Must answer \"yes\" to the question of \"can I trust the OGM results that I receive in 1 year with no additional testing\" to avoid writing issue"
+    },
+    {
+        process:"Implementation Process",
+        risk:"Model deterioration over time",
+        processStep:4,
+        riskStep:0,
+        controls:"OGM (Thresholds, etc)",
+        workpaper:5,
+        MRMVResponsibility:"Assess quality of OGM including ability to capture deterioration"
+    },
+    {
+        process:"Implementation Process",
+        risk:"Model deterioration over time",
+        processStep:4,
+        riskStep:1,
+        controls:"Governance committee choice and roll",
+        workpaper:6,
+        MRMVResponsibility:"Assess appropriateness of committees"
+    },
+    {
+        process:"Implementation Process",
+        risk:"Model deterioration over time",
+        processStep:4,
+        riskStep:2,
+        controls:"Governance committee effective challenge",
+        workpaper:6,
+        MRMVResponsibility:"Assess committee decks/minutes"
+    },
+    {
+        process:"Implementation Process",
+        risk:"Deterioration not escalated",
+        processStep:4,
+        riskStep:3,
+        controls:"Escalation plan documentation",
+        workpaper:6,
+        MRMVResponsibility:"Assess quality of escalation procedures"
+    },
+    {
+        process:"Implementation Process",
+        risk:"Deterioration not escalated",
+        processStep:4,
+        riskStep:4,
+        controls:"Escalation plan performance",
+        workpaper:5,
+        MRMVResponsibility:"Ensure escalation plan was followed"
+    },{
+        process:"Implementation Process",
+        risk:"Owner and user not familiar with the model's weaknesses and limitations (when using EMRG)",
+        processStep:4,
+        riskStep:5,
+        controls:"N/A",
+        workpaper:5,
+        MRMVResponsibility:"MRMV interviews"
+    },{
+        process:"Implementation Process", 
+        risk:"Owner and user not familiar with the model's weaknesses and limitations (when using EMRG)",
+        processStep:4,
+        riskStep:6,
+        controls:"N/A",
+        workpaper:6,
+        MRMVResponsibility:"MRMV interviews throughout Validation process"
+    },{
+        process:"Implementation Process", 
+        risk:"Model is used inappropriately",
+        processStep:4,
+        riskStep:7,
+        controls:"Clear documentaiton of intended use",
+        workpaper:1,
+        MRMVResponsibility:"Assess quality of documentation"
+    },{
+        process:"Implementation Process", 
+        risk:"Model is used in areas where model limitations are exposed",
+        processStep:4,
+        riskStep:8,
+        controls:"Clear documentation of limitations",
+        workpaper:2,
+        MRMVResponsibility:"Assess quality of documentation"
+    },{
+        process:"Implementation Process", 
+        risk:"Overrides are misused/abused",
+        processStep:4,
+        riskStep:9,
+        controls:"Committee Approvals",
+        workpaper:1,
+        MRMVResponsibility:"Assess approvals"
+    },{
+        process:"Implementation Process", 
+        risk:"Overrides are misused/abused",
+        processStep:4,
+        riskStep:10,
+        controls:"Overrides tied to model limitations",
+        workpaper:1,
+        MRMVResponsibility:"Check that overrides tie to limitations"
+    },{
+        process:"Implementation Process", 
+        risk:"Inappropriate changes are made to the model",
+        processStep:4,
+        riskStep:11,
+        controls:"Significant change definition",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assesses significant change definition and ensures replicable thresholds"
+    },{
+        process:"Implementation Process", 
+        risk:"Inappropriate or accidental changes to the model",
+        processStep:4,
+        riskStep:12,
+        controls:"Security infrastructure/passwords/etc",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assesses security infrastructure documentation.  Tests that password is required"
+    },{
+        process:"Implementation Process", 
+        risk:"Changes made to the model are not working as intended",
+        processStep:4,
+        riskStep:13,
+        controls:"Change log",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assesses change log.  MRMV ensures that \"undoing\" is possible."
+    },{
+        process:"Implementation Process", 
+        risk:"Model reporting does not meet intended purpose of model",
+        processStep:4,
+        riskStep:14,
+        controls:"N/A",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assess reporting."
+    },{
+        process:"Implementation Process", 
+        risk:"Disaster causes model to stop performing for an unacceptable period of time",
+        processStep:4,
+        riskStep:15,
+        controls:"Business continuity plan",
+        workpaper:6,
+        MRMVResponsibility:"Assess adequacy of plan."
+    },{
+        process:"Implementation Process", 
+        risk:"Model documentation does not adhere to corporate policy",
+        processStep:4,
+        riskStep:16,
+        controls:"N/A",
+        workpaper:6,
+        MRMVResponsibility:"MRMV assess compliance of documentation with MRMV requirements."
+    }
+]
+&nbsp;
+const skills=[
+    {
+        type:"programming",
+        value:"Matlab"
+    },{
+        type:"programming",
+        value:"R"
+    },{
+        type:"programming",
+        value:"C++"
+    },{
+        type:"math",
+        value:"Stochastic Calculus"
+    },{
+        type:"statistics",
+        value:"Time Series"
+    },{
+        type:"accounting",
+        value:"FAS 114"
+    }
+]
+const availablePersonel=[
+    {
+        name:"Name 1",
+        id:"123",
+        skills:[
+            "R",
+            "FAS 114",
+            "Time Series"
+        ]        
+    },
+    {
+        name:"Name 2",
+        id:"345",
+        skills:[
+            "Stochastic Calculus",
+            "R",
+            "C++",
+            "Time Series"
+        ]
+    }
+]
+&nbsp;
+const testSelection=[
+    {
+        index:0,
+        description:"Verification",
+        requiresExplanation:false
+    },
+    {
+        index:1,
+        description:"Independent Replication",
+        requiresExplanation:false
+    },
+    {
+        index:2,
+        description:"Qualitative",
+        requiresExplanation:false
+    },
+    {
+        index:3,
+        description:"None",
+        requiresExplanation:true
+    }
+]
+module.exports.RCUS=RCUS;
+module.exports.testSelection=testSelection;
+module.exports.availablePersonel=availablePersonel;
+module.exports.skills=skills;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 16 2017 12:13:59 GMT-0500 (CDT)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

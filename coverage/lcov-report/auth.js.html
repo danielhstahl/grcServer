@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for auth.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> auth.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">47.62% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>30/63</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">44.12% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>15/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">26.92% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">44.07% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/59</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+const AD = require('activedirectory')
+const configUrl='ldap://corp.rgbk.com';
+const config = { url: configUrl,
+               baseDN: 'dc=domain,dc=com'}
+//const authenticate=require('express-authentication')
+&nbsp;
+const customParser=<span class="fstat-no" title="function not covered" >fu</span>nction(entry, raw, callback){
+<span class="cstat-no" title="statement not covered" >    if (raw.hasOwnProperty("thumbnailPhoto")){</span>
+<span class="cstat-no" title="statement not covered" >        entry.thumbnailPhoto = raw.thumbnailPhoto;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    callback(entry)</span>
+}
+&nbsp;
+const wrapAuthenticate=<span class="fstat-no" title="function not covered" >(a</span>dInstance, username, password)=&gt;{
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        adInstance.authenticate(username, password, <span class="fstat-no" title="function not covered" >(e</span>rr, auth)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >            err?reject(err):resolve(auth)</span>
+        })
+    })
+}
+&nbsp;
+const wrapFindUser=<span class="fstat-no" title="function not covered" >(a</span>dInstance, userid)=&gt;{
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        adInstance.findUser(userid, <span class="fstat-no" title="function not covered" >(e</span>rr, auth)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >            err?reject(err):resolve(auth)</span>
+        })
+    })
+}
+&nbsp;
+&nbsp;
+const wrapIsMemberOf=<span class="fstat-no" title="function not covered" >(a</span>dInstance, userid, group)=&gt;{
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        adInstance.isUserMemberOf(userid, group, <span class="fstat-no" title="function not covered" >(e</span>rr, auth)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >            err?reject(err):resolve(auth)</span>
+        })
+    })
+}
+&nbsp;
+const wrapRootDSE=<span class="fstat-no" title="function not covered" >(a</span>dInstance)=&gt;{
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        adInstance.getRootDSE(<span class="fstat-no" title="function not covered" >(e</span>rr, auth)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >            err?reject(err):resolve(auth)</span>
+        })
+    })
+}
+&nbsp;
+&nbsp;
+&nbsp;
+const authenticate=<span class="fstat-no" title="function not covered" >(u</span>serid, password, cb)=&gt;{
+    const username=<span class="cstat-no" title="statement not covered" >`CORP\\${userid}`;</span>
+    let ad = <span class="cstat-no" title="statement not covered" >new AD(config);</span>
+    let domainPartition;
+    let user;
+<span class="cstat-no" title="statement not covered" >    wrapRootDSE(ad).then(<span class="fstat-no" title="function not covered" >(d</span>se)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        domainPartition=dse.namingContexts[2];</span>
+<span class="cstat-no" title="statement not covered" >        return wrapAuthenticate(ad, username, password)</span>
+    }).then(<span class="fstat-no" title="function not covered" >(a</span>uth)=&gt;{
+<span class="cstat-no" title="statement not covered" >         if(!auth){</span>
+<span class="cstat-no" title="statement not covered" >            throw new Error("Login Failed")</span>
+        }
+       const authConfig=<span class="cstat-no" title="statement not covered" >{baseDN:domainPartition, url: configUrl,username, password, attributes:{</span>
+                user: [
+                    'dn', 'distinguishedName',
+                    'userPrincipalName', 'sAMAccountName', 'mail',
+                    'lockoutTime', 'whenCreated', 'pwdLastSet', 'userAccountControl',
+                    'employeeID', 'sn', 'givenName', 'initials', 'cn', 'displayName',
+                    'comment', 'description', 'thumbnailPhoto'
+                ],    
+            }, entryParser:customParser}
+<span class="cstat-no" title="statement not covered" >        ad=new AD(authConfig);</span>
+<span class="cstat-no" title="statement not covered" >        return wrapFindUser(ad, userid)</span>
+    }).then(<span class="fstat-no" title="function not covered" >(u</span>serObject)=&gt;{
+<span class="cstat-no" title="statement not covered" >        user=userObject;</span>
+<span class="cstat-no" title="statement not covered" >        user.thumbnailPhoto=user.thumbnailPhoto.toString('base64')</span>
+<span class="cstat-no" title="statement not covered" >        return wrapIsMemberOf(ad, userid, 'MVGMembers')</span>
+    }).then(<span class="fstat-no" title="function not covered" >(i</span>sWithMRMV)=&gt;{
+<span class="cstat-no" title="statement not covered" >        user.userType=isWithMRMV?"MRMVAnalyst":"";</span>
+<span class="cstat-no" title="statement not covered" >        return cb(null,user)</span>
+    }).catch(<span class="fstat-no" title="function not covered" >(e</span>rr)=&gt;{
+<span class="cstat-no" title="statement not covered" >        if(err.message==="getaddrinfo ENOTFOUND corp.rgbk.com corp.rgbk.com:389" &amp;&amp; process.env.NODE_ENV !== 'production'){</span>
+<span class="cstat-no" title="statement not covered" >            return cb(null, {cn:"Test Person", userType:"MRMVAnalyst"});</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return cb(err, null);</span>
+    })
+}
+&nbsp;
+const hasLengthGreaterThanZero=(arr)=&gt;arr?(arr.length&gt;0?true:false):<span class="branch-1 cbranch-no" title="branch not covered" >false</span>
+&nbsp;
+const checkGroup=(allowedGroups, group)=&gt;hasLengthGreaterThanZero(allowedGroups.filter((val)=&gt;val===group ))
+&nbsp;
+const message="Permission Denied"
+const onError=(res)=&gt;res.status(401).send(message)
+const handleGroups=(allowedGroups, sql)=&gt;{
+    return (req, res, next)=&gt;{
+        const authKey = req.get('Authorization')||req.group;
+        if(!authKey){
+            onError(res)
+        }
+        else if(req.group){ //handled by MRMV's web app
+            checkGroup(allowedGroups, req.group)?next():onError(res)
+        }
+        else{ //handled by Rest API
+            sql.getUserFromKey(authKey, (err, result)=&gt;{
+                const doesKeyExist=hasLengthGreaterThanZero(result)
+                const isAuthenticated=doesKeyExist?checkGroup(allowedGroups, result[0].ADGroup):false
+                isAuthenticated?next():onError(res)
+            })
+        }
+    }
+}
+&nbsp;
+&nbsp;
+module.exports.authenticate=authenticate;
+module.exports.handleGroups=handleGroups;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 16 2017 12:13:59 GMT-0500 (CDT)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

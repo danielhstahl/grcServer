@@ -1,6 +1,5 @@
 'use strict'
 const AD = require('activedirectory')
-const sql=require('./testSql')
 const configUrl='ldap://corp.rgbk.com';
 const config = { url: configUrl,
                baseDN: 'dc=domain,dc=com'}
@@ -86,27 +85,26 @@ const authenticate=(userid, password, cb)=>{
     })
 }
 
-const hasLengthGreaterThanZero=(arr)=>arr.length>0?true:false
+const hasLengthGreaterThanZero=(arr)=>arr?(arr.length>0?true:false):false
 
 const checkGroup=(allowedGroups, group)=>hasLengthGreaterThanZero(allowedGroups.filter((val)=>val===group ))
 
-const handleGroups=(allowedGroups)=>{
+const message="Permission Denied"
+const onError=(res)=>res.status(401).send(message)
+const handleGroups=(allowedGroups, sql)=>{
     return (req, res, next)=>{
-        req.challenge = req.get('Authorization');
-        console.log(req.authentication)
-        if(!req.authentication){
-            req.authenticated=false;
-            next();
+        const authKey = req.get('Authorization')||req.group;
+        if(!authKey){
+            onError(res)
         }
         else if(req.group){ //handled by MRMV's web app
-            req.authenticated=checkGroup(allowedGroups, req.group)
-            next()
+            checkGroup(allowedGroups, req.group)?next():onError(res)
         }
         else{ //handled by Rest API
-            sql.getUserFromKey(req.authentication, (err, result)=>{
+            sql.getUserFromKey(authKey, (err, result)=>{
                 const doesKeyExist=hasLengthGreaterThanZero(result)
-                req.authenticated=doesKeyExist?checkGroup(allowedGroups, result[0].ADGroup):false
-                next();
+                const isAuthenticated=doesKeyExist?checkGroup(allowedGroups, result[0].ADGroup):false
+                isAuthenticated?next():onError(res)
             })
         }
     }

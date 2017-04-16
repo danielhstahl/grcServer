@@ -9,14 +9,16 @@ const removeFromSession=inRamDb.removeFromSession
 const getFromSession=inRamDb.getFromSession
 const auth=require('./auth')
 const sql=require('./testSql.js')
-const jsonParser = bodyParser.json();
-
+if(process.env.NODE_ENV==='development'){
+    sql.init()
+}
 let app = express();
-
-const port='3001';
+let serverInstance
+const port=process.env.NODE_ENV==='test'?'2999':'3001';
 
 winston.add(winston.transports.File, { filename: 'logfile.log' });
 
+const jsonParser = bodyParser.json();
 app.use(bodyParser.json());
 
 const transformNormalizedToKey=(associates)=>{
@@ -32,141 +34,165 @@ const transformNormalizedToKey=(associates)=>{
         return aggr
     }, [])
 }
+const close=()=>{
+    serverInstance.close()
+}
+
+
+const api=(sqlInstance)=>{
+    //sqlInstance=sqlInstance?sqlInstance:sql
+    const GroupsAllowed=(groups)=>auth.handleGroups(groups, sqlInstance)
+    app.get("/associates", (req, res)=>{ 
+        winston.info('called /associates')
+        sqlInstance.getAssociateSkills((err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /associates')
+            res.send(transformNormalizedToKey(result))
+        })
+
+    })
+    app.get("/skills", GroupsAllowed(["MRMV"]), (req, res)=>{//these are "static"
+        winston.info('called /skills')
+        sqlInstance.getSkills((err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /skills')
+            res.send(result)
+        })
+    })
+    app.get('/checkLogin', (req, res)=>{
+        winston.info('called /checkLogin')
+        res.send({hashPassword:getFromSession(req.query.sessionId)})
+    })
+    app.get("/RCUS", (req, res)=>{//these are "static"
+        winston.info('called /RCUS')
+        sqlInstance.getRcus((err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /RCUS')
+            res.send(result)
+        })
+    })
+    app.get("/testSelection", (req, res)=>{//these are "static"
+        winston.info('called /testSelection')
+        sqlInstance.getTestSelection((err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /testSelection')
+            res.send(result)
+        })
+    })
+    app.get("/validationAssociates", (req, res)=>{//in final state use validation id.  This is the "instantiated" version of "currentAssociates"
+        winston.info('called /validationAssociates')
+        sqlInstance.getValidationAssociates(req.query.validationId, (err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /validationAssociates')
+            res.send(result)
+        })
+    })
+    app.get("/validationRcus", (req, res)=>{ //in final state use validation id.  This is the "instantiated" version of "RCUS"
+        winston.info('called /validationRcus')
+        sqlInstance.getValidationRcus(req.query.validationId, (err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /validationRcus')
+            res.send(result)
+        })
+    })
+    app.get("/validationSkills", GroupsAllowed(["MRMV"]), (req, res)=>{ 
+        winston.info('called /validationSkills')
+        sqlInstance.getValidationSkills(req.query.validationId, (err, result)=>{
+            console.log(result)
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /validationSkills')
+            res.send(result)
+        })
+    })
+
+    app.post("/writeValidationRcus",  (req, res)=>{ //in final state use validation id
+        const obj=req.body;
+        winston.info('called /writeValidationRcus')
+        sqlInstance.writeValidationRcus(obj.validationId, obj.testWork, obj.explanation, obj.processStep, obj.riskStep, (err, result)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /writeValidationRcus')
+            res.sendStatus(200);
+        })
+    })
+    app.post('/login', (req, res)=>{
+        winston.info('called /login')
+        auth.authenticate(req.body.user, req.body.password, (err, user)=>{
+            if(err){
+                winston.error(`${err.message}, ${req.body.user}`)
+            }
+            if(!err){
+                user.sessionId=addToSession(cryptojs.SHA256(req.body.password).toString(cryptojs.enc.Base64))
+                winston.info('return /login')
+            }
+            res.send({err, user})
+        })
+    })
+    app.post("/writeValidationAssociate",  (req, res)=>{ //in final state use validation id
+        winston.info('called /writeValidationAssociate')
+        const id=req.body.id;
+        const include=req.body.include;
+        const validationId=req.body.validationId;
+        sqlInstance.writeValidationAssociate(validationId, id, include, (err)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /writeValidationAssociate')
+            res.sendStatus(200);
+            
+        })
+    })
+
+    app.post("/writeValidationSkill",  (req, res)=>{ //in final state use validation id
+        winston.info('called /writeValidationSkill')
+        const skill=req.body.skill;
+        const include=req.body.include;
+        const validationId=req.body.validationId;
+        sqlInstance.writeValidationSkill(validationId, skill, include, (err)=>{
+            if(err){
+                return winston.error(err.toString())
+            }
+            winston.info('return /writeValidationAssociate')
+            res.sendStatus(200);
+        })
+    })
+
+}
+
 if(process.env.NODE_ENV==='test'){
     module.exports.transformNormalizedToKey=transformNormalizedToKey;
+    module.exports.close=close;
+    module.exports.api=api
+    //module.exports.createNewKey=(key, group)=>sql.createNewKey(sql.db, key, group)
+    //sql.createNewKey(sql.db, "mykey1", "MRMV", ()=>{})
+    //sql.createNewKey(sql.db,"mykey2", "SomeKey", ()=>{})
+}
+else{
+    api(sql)
 }
 
 
 
 
-app.get("/associates", (req, res)=>{ 
-    winston.info('called /associates')
-    sql.getAssociateSkills((err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /associates')
-        res.send(transformNormalizedToKey(result))
-    })
 
-})
-app.get("/skills", (req, res)=>{//these are "static"
-    winston.info('called /skills')
-    sql.getSkills((err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /skills')
-        res.send(result)
-    })
-})
-app.get('/checkLogin', (req, res)=>{
-    winston.info('called /checkLogin')
-    res.send({hashPassword:getFromSession(req.query.sessionId)})
-})
-app.get("/RCUS", (req, res)=>{//these are "static"
-    winston.info('called /RCUS')
-    sql.getRcus((err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /RCUS')
-        res.send(result)
-    })
-})
-app.get("/testSelection", (req, res)=>{//these are "static"
-    winston.info('called /testSelection')
-    sql.getTestSelection((err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /testSelection')
-        res.send(result)
-    })
-})
-app.get("/validationAssociates", (req, res)=>{//in final state use validation id.  This is the "instantiated" version of "currentAssociates"
-    winston.info('called /validationAssociates')
-    sql.getValidationAssociates(req.query.validationId, (err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /validationAssociates')
-        res.send(result)
-    })
-})
-app.get("/validationRcus", (req, res)=>{ //in final state use validation id.  This is the "instantiated" version of "RCUS"
-    winston.info('called /validationRcus')
-    sql.getValidationRcus(req.query.validationId, (err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /validationRcus')
-        res.send(result)
-    })
-})
-app.get("/validationSkills", auth.handleGroups(["MRMV"]), (req, res)=>{ 
-    winston.info('called /validationSkills')
-    sql.getValidationSkills(req.query.validationId, (err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /validationSkills')
-        res.send(result)
-    })
-})
 
-app.post("/writeValidationRcus",  (req, res)=>{ //in final state use validation id
-    const obj=req.body;
-    winston.info('called /writeValidationRcus')
-    sql.writeValidationRcus(obj.validationId, obj.testWork, obj.explanation, obj.processStep, obj.riskStep, (err, result)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /writeValidationRcus')
-        res.sendStatus(200);
-    })
-})
-app.post('/login', (req, res)=>{
-    winston.info('called /login')
-    auth.authenticate(req.body.user, req.body.password, (err, user)=>{
-        if(err){
-            winston.error(`${err.message}, ${req.body.user}`)
-        }
-        if(!err){
-            user.sessionId=addToSession(cryptojs.SHA256(req.body.password).toString(cryptojs.enc.Base64))
-            winston.info('return /login')
-        }
-        res.send({err, user})
-    })
-})
-app.post("/writeValidationAssociate",  (req, res)=>{ //in final state use validation id
-    winston.info('called /writeValidationAssociate')
-    const id=req.body.id;
-    const include=req.body.include;
-    const validationId=req.body.validationId;
-    sql.writeValidationAssociate(validationId, id, include, (err)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /writeValidationAssociate')
-        res.sendStatus(200);
-        
-    })
-})
 
-app.post("/writeValidationSkill",  (req, res)=>{ //in final state use validation id
-    winston.info('called /writeValidationSkill')
-    const skill=req.body.skill;
-    const include=req.body.include;
-    const validationId=req.body.validationId;
-    sql.writeValidationSkill(validationId, skill, include, (err)=>{
-        if(err){
-            return winston.error(err.toString())
-        }
-        winston.info('return /writeValidationAssociate')
-        res.sendStatus(200);
-    })
-})
 
-app.listen(port);
+
+serverInstance=app.listen(port);
 

@@ -1,9 +1,8 @@
 'use strict';
 const sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
+let db = new sqlite3.Database(':memory:');
 const RCUS=require('./tmpData').RCUS
 const testSelection=require('./tmpData').testSelection
-
 const CreateRCUS=`CREATE TABLE RCUS(
     process varchar(20) not null,
     risk varchar(255) not null,
@@ -13,7 +12,7 @@ const CreateRCUS=`CREATE TABLE RCUS(
     workpaper int not null,
     MRMVResponsibility varchar(255) not null,
     CONSTRAINT riskprocess PRIMARY KEY(processStep, riskStep)
-    );`
+);`
 
 
 
@@ -138,7 +137,7 @@ const getValidationAssociates=(validationId, cb)=>{
     cb)
 }
 
-const getValidationSkills=(validationId, cb)=>{
+const getValidationSkills=( validationId, cb)=>{
     let valSkills=[];
     db.each(
     `
@@ -158,7 +157,7 @@ const getValidationSkills=(validationId, cb)=>{
         cb(err, valSkills)
     })
 }
-const getValidationRcus=(validationId, cb)=>{
+const getValidationRcus=( validationId, cb)=>{
     db.all(
     `
     SELECT testWork, explanation, t1.processStep as processStep, t1.riskStep as riskStep FROM
@@ -172,7 +171,7 @@ const getValidationRcus=(validationId, cb)=>{
     `,
     [validationId, validationId], cb)
 }
-const writeValidationRcus=(validationId, testWork, explanation, processStep, riskStep, cb)=>{
+const writeValidationRcus=( validationId, testWork, explanation, processStep, riskStep, cb)=>{
     db.run(`
        insert into ValidationRcus (testWork, explanation, processStep, riskStep, validationId, dateAdded)  
        values (?, ?, ?, ?, ?, datetime('now')) 
@@ -180,7 +179,7 @@ const writeValidationRcus=(validationId, testWork, explanation, processStep, ris
         testWork, explanation, processStep, riskStep, validationId
     ], cb)
 }
-const writeValidationAssociate=(validationId, id, include, cb)=>{
+const writeValidationAssociate=( validationId, id, include, cb)=>{
     db.run(`
        insert into ValidationAssociates (validationId, id, include, dateAdded)  
        values (?, ?, ?, datetime('now')) 
@@ -188,7 +187,7 @@ const writeValidationAssociate=(validationId, id, include, cb)=>{
         validationId, id, include?1:0
     ], cb)
 }
-const writeValidationSkill=(validationId, skill, include, cb)=>{
+const writeValidationSkill=( validationId, skill, include, cb)=>{
     db.run(`
        insert into ValidationSkills (validationId, skill, include, dateAdded)  
        values (?, ?, ?, datetime('now')) 
@@ -197,15 +196,15 @@ const writeValidationSkill=(validationId, skill, include, cb)=>{
     ], cb)
 }
 
-const getAllFromTable=(table)=>{
+const getAllFromTable=( table)=>{
     db.each(`SELECT * FROM ${table}`, (err, row)=>{
         console.log(row);
     })
 }
-const getRcus=(cb)=>{
+const getRcus=( cb)=>{
     db.all(`SELECT * FROM RCUS;`, cb)
 }
-const getTestSelection=(cb)=>{
+const getTestSelection=( cb)=>{
     let testSelection=[]
     db.each(`SELECT * FROM testSelection;`, (err, res)=>{
         testSelection.push({index:res.index, description:res.description, requiresExplanation:res.requiresExplanation===1?true:false})
@@ -216,43 +215,47 @@ const getTestSelection=(cb)=>{
 }
 
 const CreateGroupKey=`CREATE TABLE GroupKey 
-(ADGroup varchar(20) not null, key varchar(30) not null, dateCreated DATETIME not null, CONSTRAINT pk_userkey PRIMARY KEY(ADGroup, key, datecreated)`
+(ADGroup varchar(20) not null, key varchar(30) not null, dateCreated DATETIME not null, CONSTRAINT pk_userkey PRIMARY KEY(ADGroup, key))`
 
-const getUserFromKey=(key, cb)=>{
-    db.all(`SELECT ADGroup, Key FROM (SELECT ADGroup, MAX(dateCreated) as mxDate
+const getUserFromKey=( key, cb)=>{
+    db.all(`SELECT t1.ADGroup, Key FROM (SELECT ADGroup, MAX(dateCreated) as mxDate
     FROM groupKey  GROuP BY ADGroup) t1 INNER JOIN GroupKey t2
     ON t1.AdGroup=t2.AdGroup AND t1.mxDate=t2.DateCreated
     WHERE KEy=?
     `, [key], cb)
 }
-const createNewKey=(key, group, cb)=>{
-    db.run(`INSERT INTO groupKEy (AdGroup, Key, dateCreated) VALUES (?, ?, datetime('now'))`, [group, key], cb);
+const createNewKey=( key, group, cb)=>{
+    db.run(`INSERT INTO GroupKey (AdGroup, Key, dateCreated) VALUES (?, ?, datetime('now'))`, [group, key], cb);
 }
 
+const init=()=>{
+    
+    db.serialize(()=>{
+        db.exec(CreateGroupKey)
+        createNewKey( "mykey1", "MRMV", ()=>{})
+        createNewKey("mykey2", "SomeKey", ()=>{})
+    })
+    db.serialize(()=>{
+        db.exec(CreateAssociates);
+        db.exec(CreateSkillCategory);
+        db.exec(CreateSkills);
+        db.exec(CreateAssociateSkills);
+        db.exec(CreateValidations);
+        db.exec(CreateValidationSkills);
+        db.exec(CreateValidationAssociates);
+        db.exec(InsertAssociates);
+        db.exec(InsertSkillCategory);
+        db.exec(InsertSkills);
+        db.exec(InsertAssociateSkills);
+        db.exec(InsertValidations);
+        db.exec(CreateRCUS);
+        db.exec(CreateTestSelection);
+        db.exec(CreateRcusValidation)
+        InsertRCUS();
+        TestSelection();
+    });
+}
 
-db.serialize(()=>{
-  db.exec(CreateAssociates);
-  db.exec(CreateUserKey);
-  db.exec(CreateSkillCategory);
-  db.exec(CreateSkills);
-  db.exec(CreateAssociateSkills);
-  db.exec(CreateValidations);
-  db.exec(CreateValidationSkills);
-  db.exec(CreateValidationAssociates);
-  db.exec(InsertAssociates);
-  db.exec(InsertSkillCategory);
-  db.exec(InsertSkills);
-  db.exec(InsertAssociateSkills);
-  db.exec(InsertValidations);
-  db.exec(CreateRCUS);
-  db.exec(CreateTestSelection);
-  db.exec(CreateRcusValidation)
-  InsertRCUS();
-  TestSelection();
-  /*db.each("SELECT id FROM Associates", (err, row)=>{
-      console.log( row.id);
-  });*/
-});
 
 
 ///TBD!
@@ -268,3 +271,7 @@ module.exports.getRcus=getRcus
 module.exports.getTestSelection=getTestSelection
 module.exports.getValidationRcus=getValidationRcus
 module.exports.writeValidationRcus=writeValidationRcus
+module.exports.getUserFromKey=getUserFromKey
+module.exports.createNewKey=createNewKey
+module.exports.db=db
+module.exports.init=init

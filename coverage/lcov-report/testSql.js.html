@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for testSql.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> testSql.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.47% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>80/97</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">44.44% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/27</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.47% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>80/97</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database(':memory:');
+const RCUS=require('./tmpData').RCUS
+const testSelection=require('./tmpData').testSelection
+const CreateRCUS=`CREATE TABLE RCUS(
+    process varchar(20) not null,
+    risk varchar(255) not null,
+    processStep int not null, 
+    riskStep int not null,
+    controls varchar(20) not null,
+    workpaper int not null,
+    MRMVResponsibility varchar(255) not null,
+    CONSTRAINT riskprocess PRIMARY KEY(processStep, riskStep)
+);`
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+const InsertRCUS=()=&gt;{
+    RCUS.map((item)=&gt;{
+        db.run(`INSERT INTO RCUS (process, risk, processStep, riskStep, controls, workpaper, MRMVResponsibility) VALUES (?, ?, ?, ?, ?, ?, ?);`, [item.process, item.risk, item.processStep, item.riskStep, item.controls, item.workpaper, item.MRMVResponsibility])
+    })
+}
+const CreateTestSelection=`CREATE TABLE testSelection([index] int not null constraint testSElID primary key, description varchar(25) not null, requiresExplanation bool not null);`;
+&nbsp;
+const TestSelection=()=&gt;{
+    testSelection.map((item)=&gt;{
+        db.run(`INSERT INTO testSelection ([index], description, requiresExplanation) VALUES (?, ?, ?);`, [item.index, item.description, item.requiresExplanation])
+    })
+}
+&nbsp;
+const CreateAssociates=`CREATE TABLE Associates(
+id varchar(10) constraint associateId primary key
+);`
+&nbsp;
+const CreateSkillCategory=`CREATE TABLE SkillCategory(
+    category varchar(20) constraint skillCategoryId primary key
+);`
+&nbsp;
+const CreateSkills=`CREATE TABLE Skills(
+    skill varchar(20) constraint skillId primary key,
+    category varchar(20) not null,
+    CONSTRAINT skillToCategory FOREIGN KEY(category) REFERENCES SkillCategory(category));`
+&nbsp;
+const CreateAssociateSkills=`CREATE TABLE AssociateSkills(
+    id varchar(10) not null,
+    skill varchar(20) not null,
+    dateAdded DATETIME not null,
+CONSTRAINT AssociateSkillID PRIMARY KEY(id, skill) ,
+CONSTRAINT AssociateSkillsToAssociate FOREIGN KEY(id) REFERENCES Associates(id),
+CONSTRAINT AssociateSkillsToSkills FOREIGN KEY(skill) REFERENCES Skills(skill));`
+&nbsp;
+const CreateValidations=`CREATE TABLE Validations(
+    validationId varchar(10) constraint validationID primary key,
+    beginDate DATETIME not null
+);`
+&nbsp;
+const CreateRcusValidation=`CREATE TABLE ValidationRcus (
+    testWork int not null, 
+    explanation varchar(255) not null, 
+    processStep int not null, 
+    riskStep int not null, validationId varchar(10), 
+    dateAdded datetime not null, 
+    constraint validationrcuspk 
+    PRIMARY KEY(processStep, riskStep, 
+    dateAdded, validationId),
+    constraint validationRcusFk 
+    FOREIGN KEY(processStep, riskStep) 
+    REFERENCES RCUS(processStep, riskStep), 
+    constraint validationRcusValidation FOREIGN KEY(ValidationID)
+    REFERENCES Validations(ValidationId));`
+&nbsp;
+const CreateValidationSkills=`CREATE TABLE ValidationSkills(
+    validationId varchar(10) not null,
+    skill varchar(20) not null,
+    include boolean not null,
+    dateAdded DATETIME not null,
+CONSTRAINT validationSkillsId PRIMARY KEY(validationId, skill, dateAdded),
+CONSTRAINT ValidationSkillsToValidation FOREIGN KEY(validationId) REFERENCES Validations(validationId),
+CONSTRAINT ValidationSkillstoSkills FOREIGN KEY(skill) REFERENCES Skills(skill))`
+&nbsp;
+const CreateValidationAssociates=`CREATE TABLE ValidationAssociates(
+    validationId varchar(10) not null,
+    id varchar(10) not null, 
+    include boolean not null,
+    dateAdded DATETIME not null,
+CONSTRAINT validationAssociatesId PRIMARY KEY(validationId, id, dateAdded),
+CONSTRAINT ValidationAssociatesToValidation FOREIGN KEY(validationId) REFERENCES Validations(validationId),
+CONSTRAINT ValidationAssociatestoAssociates FOREIGN KEY(id) REFERENCES Associates(id))`
+&nbsp;
+const InsertAssociates=`INSERT INTO Associates (id) VALUES('123');INSERT INTO Associates (id) VALUES('456');`
+&nbsp;
+const InsertSkillCategory=`INSERT INTO SkillCategory (category) VALUES('programming');
+INSERT INTO SkillCategory (category) VALUES('math');
+INSERT INTO SkillCategory (category) VALUES('statistics');
+INSERT INTO SkillCategory (category) VALUES('accounting');`
+&nbsp;
+const InsertSkills=`INSERT INTO Skills (skill, category) VALUES('Matlab', 'programming');
+INSERT INTO Skills (skill, category) VALUES('R', 'programming');
+INSERT INTO Skills (skill, category) VALUES('C++', 'programming');
+INSERT INTO Skills (skill, category) VALUES('Stochastic Calculus', 'math');
+INSERT INTO Skills (skill, category) VALUES('Time Series', 'statistics');
+INSERT INTO Skills (skill, category) VALUES('FAS 114', 'accounting');`
+&nbsp;
+const InsertAssociateSkills=`INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('123', 'R', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('123', 'FAS 114', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('123', 'Time Series', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('456', 'R', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('456', 'Stochastic Calculus', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('456', 'C++', datetime('now'));
+INSERT INTO AssociateSkills (id, skill, dateAdded) VALUES ('456', 'Time Series', datetime('now'));`
+&nbsp;
+const InsertValidations=`INSERT INTO Validations (validationId, beginDate) VALUES ('1', datetime('now'));`
+&nbsp;
+&nbsp;
+&nbsp;
+const getAssociateSkills=<span class="fstat-no" title="function not covered" >(c</span>b)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.all(`SELECT id, skill from AssociateSkills;`, cb)</span>
+} 
+const getSkills=(cb)=&gt;{
+    db.all(`SELECT category as type, skill as value FROM skills;`, cb)
+}
+const getValidationAssociates=<span class="fstat-no" title="function not covered" >(v</span>alidationId, cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.all(</span>
+    `
+    SELECT t1.id as id FROM
+        (SELECT id, MAX(dateAdded) as mxDate FROM
+            (SELECT id, dateAdded FROM ValidationAssociates WHERE validationId=?) 
+        GROUP BY id) t1
+    INNER JOIN
+        (SELECT id, dateAdded, include FROM ValidationAssociates WHERE validationId=?) t2
+    ON t1.id=t2.id AND t1.mxDate=t2.dateAdded
+    WHERE include=1
+    `,
+    [validationId, validationId],
+    cb)
+}
+&nbsp;
+const getValidationSkills=<span class="fstat-no" title="function not covered" >( </span>validationId, cb)=&gt;{
+    let valSkills=<span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >    db.each(</span>
+    `
+    SELECT t1.skill as skill FROM
+        (SELECT skill, MAX(dateAdded) as mxDate FROM
+            (SELECT skill, dateAdded FROM ValidationSkills WHERE validationId=?) 
+        GROUP BY skill) t1
+    INNER JOIN
+        (SELECT skill, dateAdded, include FROM ValidationSkills WHERE validationId=?) t2
+    ON t1.skill=t2.skill AND t1.mxDate=t2.dateAdded
+    WHERE include=1
+    `,
+    [validationId, validationId], <span class="fstat-no" title="function not covered" >(e</span>rr, result)=&gt;{
+<span class="cstat-no" title="statement not covered" >        valSkills.push(result.skill)</span>
+    },
+<span class="fstat-no" title="function not covered" >    (e</span>rr, rowCount)=&gt;{
+<span class="cstat-no" title="statement not covered" >        cb(err, valSkills)</span>
+    })
+}
+const getValidationRcus=<span class="fstat-no" title="function not covered" >( </span>validationId, cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.all(</span>
+    `
+    SELECT testWork, explanation, t1.processStep as processStep, t1.riskStep as riskStep FROM
+        (SELECT processStep, riskStep, MAX(dateAdded) as mxDate FROM
+           ValidationRcus WHERE validationId=?
+        GROUP BY processStep, riskStep) t1
+    INNER JOIN
+        (SELECT processStep, riskStep, dateAdded, testWork, explanation FROM ValidationRcus WHERE validationId=?) t2
+    ON t1.riskStep=t2.riskStep AND t1.mxDate=t2.dateAdded
+    and t1.processStep=t2.processStep
+    `,
+    [validationId, validationId], cb)
+}
+const writeValidationRcus=<span class="fstat-no" title="function not covered" >( </span>validationId, testWork, explanation, processStep, riskStep, cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.run(`</span>
+       insert into ValidationRcus (testWork, explanation, processStep, riskStep, validationId, dateAdded)  
+       values (?, ?, ?, ?, ?, datetime('now')) 
+    `,[
+        testWork, explanation, processStep, riskStep, validationId
+    ], cb)
+}
+const writeValidationAssociate=<span class="fstat-no" title="function not covered" >( </span>validationId, id, include, cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.run(`</span>
+       insert into ValidationAssociates (validationId, id, include, dateAdded)  
+       values (?, ?, ?, datetime('now')) 
+    `,[
+        validationId, id, include?1:0
+    ], cb)
+}
+const writeValidationSkill=<span class="fstat-no" title="function not covered" >( </span>validationId, skill, include, cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.run(`</span>
+       insert into ValidationSkills (validationId, skill, include, dateAdded)  
+       values (?, ?, ?, datetime('now')) 
+    `,[
+        validationId, skill, include?1:0
+    ], cb)
+}
+&nbsp;
+const getAllFromTable=<span class="fstat-no" title="function not covered" >( </span>table)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.each(`SELECT * FROM ${table}`, <span class="fstat-no" title="function not covered" >(e</span>rr, row)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        console.log(row);</span>
+    })
+}
+const getRcus=<span class="fstat-no" title="function not covered" >( </span>cb)=&gt;{
+<span class="cstat-no" title="statement not covered" >    db.all(`SELECT * FROM RCUS;`, cb)</span>
+}
+const getTestSelection=<span class="fstat-no" title="function not covered" >( </span>cb)=&gt;{
+    let testSelection=<span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >    db.each(`SELECT * FROM testSelection;`, <span class="fstat-no" title="function not covered" >(e</span>rr, res)=&gt;{</span>
+<span class="cstat-no" title="statement not covered" >        testSelection.push({index:res.index, description:res.description, requiresExplanation:res.requiresExplanation===1?true:false})</span>
+    }, <span class="fstat-no" title="function not covered" >(e</span>rr)=&gt;{
+<span class="cstat-no" title="statement not covered" >        cb(err, testSelection);</span>
+    })
+&nbsp;
+}
+&nbsp;
+const CreateGroupKey=`CREATE TABLE GroupKey 
+(ADGroup varchar(20) not null, key varchar(30) not null, dateCreated DATETIME not null, CONSTRAINT pk_userkey PRIMARY KEY(ADGroup, key))`
+&nbsp;
+const getUserFromKey=( key, cb)=&gt;{
+    db.all(`SELECT t1.ADGroup, Key FROM (SELECT ADGroup, MAX(dateCreated) as mxDate
+    FROM groupKey  GROuP BY ADGroup) t1 INNER JOIN GroupKey t2
+    ON t1.AdGroup=t2.AdGroup AND t1.mxDate=t2.DateCreated
+    WHERE KEy=?
+    `, [key], cb)
+}
+const createNewKey=( key, group, cb)=&gt;{
+    db.run(`INSERT INTO GroupKey (AdGroup, Key, dateCreated) VALUES (?, ?, datetime('now'))`, [group, key], cb);
+}
+&nbsp;
+const init=()=&gt;{
+    
+    db.serialize(()=&gt;{
+        db.exec(CreateGroupKey)
+        createNewKey( "mykey1", "MRMV", ()=&gt;{})
+        createNewKey("mykey2", "SomeKey", ()=&gt;{})
+    })
+    db.serialize(()=&gt;{
+        db.exec(CreateAssociates);
+        db.exec(CreateSkillCategory);
+        db.exec(CreateSkills);
+        db.exec(CreateAssociateSkills);
+        db.exec(CreateValidations);
+        db.exec(CreateValidationSkills);
+        db.exec(CreateValidationAssociates);
+        db.exec(InsertAssociates);
+        db.exec(InsertSkillCategory);
+        db.exec(InsertSkills);
+        db.exec(InsertAssociateSkills);
+        db.exec(InsertValidations);
+        db.exec(CreateRCUS);
+        db.exec(CreateTestSelection);
+        db.exec(CreateRcusValidation)
+        InsertRCUS();
+        TestSelection();
+    });
+}
+&nbsp;
+&nbsp;
+&nbsp;
+///TBD!
+&nbsp;
+module.exports.getAssociateSkills=getAssociateSkills
+module.exports.getSkills=getSkills
+module.exports.getValidationAssociates=getValidationAssociates
+module.exports.getValidationSkills=getValidationSkills
+module.exports.writeValidationAssociate=writeValidationAssociate
+module.exports.writeValidationSkill=writeValidationSkill
+module.exports.getAllFromTable=getAllFromTable
+module.exports.getRcus=getRcus
+module.exports.getTestSelection=getTestSelection
+module.exports.getValidationRcus=getValidationRcus
+module.exports.writeValidationRcus=writeValidationRcus
+module.exports.getUserFromKey=getUserFromKey
+module.exports.createNewKey=createNewKey
+module.exports.db=db
+module.exports.init=init</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 16 2017 12:13:59 GMT-0500 (CDT)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
