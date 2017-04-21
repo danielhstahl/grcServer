@@ -9,6 +9,7 @@ const removeFromSession=inRamDb.removeFromSession
 const getFromSession=inRamDb.getFromSession
 const auth=require('./auth')
 const sql=require('./testSql.js')
+const policies=require('./policies')
 if(process.env.NODE_ENV==='development'||process.env.NODE_ENV===undefined){
     sql.init()
 }
@@ -38,9 +39,11 @@ const close=()=>{
     serverInstance.close()
 }
 const api=(sqlInstance)=>{
+    const policy=policies.getPolicies(sqlInstance)
+    //console.log(policy)
     //sqlInstance=sqlInstance?sqlInstance:sql
-    const GroupsAllowed=(groups)=>auth.handleGroups(groups, sqlInstance)
-    app.get("/associates", (req, res)=>{ 
+    //const GroupsAllowed=(groups)=>auth.handleGroups(groups, sqlInstance)
+    app.get("/associates",  policy.auditAndMRMV, (req, res)=>{ 
         winston.info('called /associates')
         sqlInstance.getAssociateSkills((err, result)=>{
             if(err){
@@ -50,7 +53,7 @@ const api=(sqlInstance)=>{
             res.send(transformNormalizedToKey(result))
         })
     })
-    app.get("/skills", GroupsAllowed(["MRMV"]), (req, res)=>{//these are "static"
+    app.get("/skills", policy.auditAndMRMV, (req, res)=>{//these are "static"
         winston.info('called /skills')
         sqlInstance.getSkills((err, result)=>{
             if(err){
@@ -64,7 +67,7 @@ const api=(sqlInstance)=>{
         winston.info('called /checkLogin')
         res.send({hashPassword:getFromSession(req.query.sessionId)})
     })
-    app.get("/RCUS", (req, res)=>{//these are "static"
+    app.get("/RCUS", policy.auditAndMRMV, (req, res)=>{//these are "static"
         winston.info('called /RCUS')
         sqlInstance.getRcus((err, result)=>{
             if(err){
@@ -74,7 +77,7 @@ const api=(sqlInstance)=>{
             res.send(result)
         })
     })
-    app.get("/testSelection", (req, res)=>{//these are "static"
+    app.get("/testSelection",  policy.auditAndMRMV, (req, res)=>{//these are "static"
         winston.info('called /testSelection')
         sqlInstance.getTestSelection((err, result)=>{
             if(err){
@@ -84,7 +87,7 @@ const api=(sqlInstance)=>{
             res.send(result)
         })
     })
-    app.get("/validationAssociates", (req, res)=>{//in final state use validation id.  This is the "instantiated" version of "currentAssociates"
+    app.get("/validationAssociates",  policy.auditAndMRMV, (req, res)=>{//in final state use validation id.  This is the "instantiated" version of "currentAssociates"
         winston.info('called /validationAssociates')
         sqlInstance.getValidationAssociates(req.query.validationId, (err, result)=>{
             if(err){
@@ -94,7 +97,7 @@ const api=(sqlInstance)=>{
             res.send(result)
         })
     })
-    app.get("/validationRcus", (req, res)=>{ //in final state use validation id.  This is the "instantiated" version of "RCUS"
+    app.get("/validationRcus",  policy.auditAndMRMV, (req, res)=>{ //in final state use validation id.  This is the "instantiated" version of "RCUS"
         winston.info('called /validationRcus')
         sqlInstance.getValidationRcus(req.query.validationId, (err, result)=>{
             if(err){
@@ -104,7 +107,7 @@ const api=(sqlInstance)=>{
             res.send(result)
         })
     })
-    app.get("/validationSkills", GroupsAllowed(["MRMV"]), (req, res)=>{ 
+    app.get("/validationSkills",  policy.auditAndMRMV, (req, res)=>{ 
         winston.info('called /validationSkills')
         sqlInstance.getValidationSkills(req.query.validationId, (err, result)=>{
             console.log(result)
@@ -116,7 +119,7 @@ const api=(sqlInstance)=>{
         })
     })
 
-    app.post("/writeValidationRcus",  (req, res)=>{ //in final state use validation id
+    app.post("/writeValidationRcus",  policy.auditAndMRMV,  (req, res)=>{ //in final state use validation id
         const obj=req.body;
         winston.info('called /writeValidationRcus')
         sqlInstance.writeValidationRcus(obj.validationId, obj.testWork, obj.explanation, obj.processStep, obj.riskStep, (err, result)=>{
@@ -127,9 +130,9 @@ const api=(sqlInstance)=>{
             res.sendStatus(200);
         })
     })
-    app.post('/login', (req, res)=>{
+    app.post('/login',    (req, res)=>{
         winston.info('called /login')
-        auth.authenticate(req.body.user, req.body.password, (err, user)=>{
+        auth.authenticate(req.body.user, req.body.password, policies.mapADToPolicies, (err, user)=>{
             if(err){
                 winston.error(`${err.message}, ${req.body.user}`)
             }
@@ -140,7 +143,7 @@ const api=(sqlInstance)=>{
             res.send({err, user})
         })
     })
-    app.post("/writeValidationAssociate",  (req, res)=>{ //in final state use validation id
+    app.post("/writeValidationAssociate",  policy.auditAndMRMV,  (req, res)=>{ //in final state use validation id
         winston.info('called /writeValidationAssociate')
         const id=req.body.id;
         const include=req.body.include;
@@ -155,7 +158,7 @@ const api=(sqlInstance)=>{
         })
     })
 
-    app.post("/writeValidationSkill",  (req, res)=>{ //in final state use validation id
+    app.post("/writeValidationSkill",  policy.auditAndMRMV,  (req, res)=>{ //in final state use validation id
         winston.info('called /writeValidationSkill')
         const skill=req.body.skill;
         const include=req.body.include;
@@ -175,9 +178,6 @@ if(process.env.NODE_ENV==='test'){
     module.exports.transformNormalizedToKey=transformNormalizedToKey;
     module.exports.close=close;
     module.exports.api=api
-    //module.exports.createNewKey=(key, group)=>sql.createNewKey(sql.db, key, group)
-    //sql.createNewKey(sql.db, "mykey1", "MRMV", ()=>{})
-    //sql.createNewKey(sql.db,"mykey2", "SomeKey", ()=>{})
 }
 else{
     api(sql)

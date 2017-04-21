@@ -37,6 +37,14 @@ const wrapIsMemberOf=(adInstance, userid, group)=>{
     })
 }
 
+const wrapGetGroupMembership=(adInstance, userid)=>{
+    return new Promise((resolve, reject)=>{
+        adInstance.getGroupMembershipForUser(userid, (err, auth)=>{
+            err?reject(err):resolve(auth)
+        })
+    })
+}
+
 const wrapRootDSE=(adInstance)=>{
     return new Promise((resolve, reject)=>{
         adInstance.getRootDSE((err, auth)=>{
@@ -45,9 +53,15 @@ const wrapRootDSE=(adInstance)=>{
     })
 }
 
-
-
-const authenticate=(userid, password, cb)=>{
+const defaultMapper=(groups)=>{
+    return groups.map(val=>val.cn)
+}
+const authenticate=(userid, password, mapper, cb)=>{
+    /**mapper is optional, if cb is null then mapper is the cb */
+    if(!cb){
+        cb=mapper
+        mapper=defaultMapper
+    }
     const username=`CORP\\${userid}`;
     let ad = new AD(config);
     let domainPartition;
@@ -73,13 +87,13 @@ const authenticate=(userid, password, cb)=>{
     }).then((userObject)=>{
         user=userObject;
         user.thumbnailPhoto=user.thumbnailPhoto.toString('base64')
-        return wrapIsMemberOf(ad, userid, 'MVGMembers')
-    }).then((isWithMRMV)=>{
-        user.userType=isWithMRMV?"MRMVAnalyst":"";
+        return wrapGetGroupMembership(ad, userid)
+    }).then((membership)=>{
+        user.policyGroups=mapper(membership)
         return cb(null,user)
     }).catch((err)=>{
         if(err.message==="getaddrinfo ENOTFOUND corp.rgbk.com corp.rgbk.com:389" && process.env.NODE_ENV !== 'production'){
-            return cb(null, {cn:"Test Person", userType:"MRMVAnalyst"});
+            return cb(null, {cn:"Test Person", policyGroups:["MRMVAnalyst"]});
         }
         return cb(err, null);
     })
@@ -87,18 +101,36 @@ const authenticate=(userid, password, cb)=>{
 
 const hasLengthGreaterThanZero=(arr)=>arr?(arr.length>0?true:false):false
 
-const checkGroup=(allowedGroups, group)=>hasLengthGreaterThanZero(allowedGroups.filter((val)=>val===group ))
+const innerjoin=(leftArray, rightArray, condition)=>{
+    return leftArray.filter((left)=>{
+        return rightArray.filter((right)=>condition(left, right))[0]
+    })
+}
+
+const checkGroup=(allowedGroups, groups)=>hasLengthGreaterThanZero(
+    innerjoin(allowedGroups, groups, (left, right)=>left===right)
+)
 
 const message="Permission Denied"
 const onError=(res)=>res.status(401).send(message)
+const getPolicyGroups=(req)=>{
+    if(req.policyGroups){
+        return req.policyGroups
+    }
+    if(req.query&&req.query.policyGroups){
+        return req.query.policyGroups
+    }
+    return null
+}
 const handleGroups=(allowedGroups, sql)=>{
     return (req, res, next)=>{
-        const authKey = req.get('Authorization')||req.group;
+        const policyGroups=getPolicyGroups(req)
+        const authKey = req.get('Authorization')||policyGroups;
         if(!authKey){
             onError(res)
         }
-        else if(req.group){ //handled by MRMV's web app
-            checkGroup(allowedGroups, req.group)?next():onError(res)
+        else if(policyGroups){ //handled by MRMV's web app
+            checkGroup(allowedGroups, policyGroups)?next():onError(res)
         }
         else{ //handled by Rest API
             sql.getUserFromKey(authKey, (err, result)=>{
