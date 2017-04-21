@@ -5,7 +5,7 @@ sql.init()
   sql.createNewKey(sql.db, "mykey2", "SomeKey", ()=>{})
 });*/
 it("errors when putting duplicate key:group pairs", (done)=>{
-   sql.createNewKey( "mykey1", "MRMV", (err, result)=>{
+   sql.createNewKey( "mykey1", "MRMVAnalyst", (err, result)=>{
         expect(err).toBeTruthy()
         done()
    })
@@ -18,7 +18,7 @@ it("returns no results when key does not exist", (done)=>{
 })
 it("returns latest result when key does exist", (done)=>{
     sql.getUserFromKey( "mykey1", (err, result)=>{
-        expect(result).toEqual([{key:"mykey1", ADGroup:"MRMV"}])
+        expect(result).toEqual([{key:"mykey1", ADGroup:"MRMVAnalyst"}])
         done()
     })
 })

@@ -50,6 +50,7 @@ it("returns skills when part of MRMV group", (done)=>{
             Authorization : "mykey1"
         }
     }, (err, response, body)=>{
+        console.log(body)
         expect(JSON.parse(body)).toEqual([{"type":"programming","value":"Matlab"},{"type":"programming","value":"R"},{"type":"programming","value":"C++"},{"type":"math","value":"Stochastic Calculus"},{"type":"statistics","value":"Time Series"},{"type":"accounting","value":"FAS 114"}])
         done()
     })

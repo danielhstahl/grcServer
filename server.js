@@ -40,9 +40,6 @@ const close=()=>{
 }
 const api=(sqlInstance)=>{
     const policy=policies.getPolicies(sqlInstance)
-    //console.log(policy)
-    //sqlInstance=sqlInstance?sqlInstance:sql
-    //const GroupsAllowed=(groups)=>auth.handleGroups(groups, sqlInstance)
     app.get("/associates",  policy.auditAndMRMV, (req, res)=>{ 
         winston.info('called /associates')
         sqlInstance.getAssociateSkills((err, result)=>{

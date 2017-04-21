@@ -107,15 +107,16 @@ const innerjoin=(leftArray, rightArray, condition)=>{
     })
 }
 
-const checkGroup=(allowedGroups, groups)=>hasLengthGreaterThanZero(
+const checkGroups=(allowedGroups, groups)=>hasLengthGreaterThanZero(
     innerjoin(allowedGroups, groups, (left, right)=>left===right)
 )
+const checkGroup=(allowedGroups, group)=>hasLengthGreaterThanZero(allowedGroups.filter((val)=>val===group ))
 
 const message="Permission Denied"
 const onError=(res)=>res.status(401).send(message)
 const getPolicyGroups=(req)=>{
-    if(req.policyGroups){
-        return req.policyGroups
+    if(req.body&&req.body.policyGroups){
+        return req.body.policyGroups
     }
     if(req.query&&req.query.policyGroups){
         return req.query.policyGroups
@@ -130,7 +131,7 @@ const handleGroups=(allowedGroups, sql)=>{
             onError(res)
         }
         else if(policyGroups){ //handled by MRMV's web app
-            checkGroup(allowedGroups, policyGroups)?next():onError(res)
+            checkGroups(allowedGroups, policyGroups)?next():onError(res)
         }
         else{ //handled by Rest API
             sql.getUserFromKey(authKey, (err, result)=>{

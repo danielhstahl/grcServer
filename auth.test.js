@@ -58,7 +58,7 @@ it('authenticates when group is included and does match (web app)', (done)=>{
     const middleWare=GroupsAllowed(["MRMV", "Audit"])
     let req={
         get:key=>key==='Authorization'?"SomethingElse":null,
-        group:"MRMV"
+        body:{policyGroups:["MRMV"]}
     }
     const res={
       status:(number)=>{

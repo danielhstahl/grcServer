@@ -232,7 +232,7 @@ const init=()=>{
     
     db.serialize(()=>{
         db.exec(CreateGroupKey)
-        createNewKey( "mykey1", "MRMV", ()=>{})
+        createNewKey( "mykey1", "MRMVAnalyst", ()=>{})
         createNewKey("mykey2", "SomeKey", ()=>{})
     })
     db.serialize(()=>{
