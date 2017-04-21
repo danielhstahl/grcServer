@@ -47,7 +47,14 @@ const wrapGetGroupMembership=(adInstance, userid)=>{
 
 const wrapRootDSE=(adInstance)=>{
     return new Promise((resolve, reject)=>{
+        let shouldError=true
+        setTimeout(()=>{
+            if(shouldError){
+                reject(new Error("Timeout"))
+            }
+        }, 1000)
         adInstance.getRootDSE((err, auth)=>{
+            shouldError=false
             err?reject(err):resolve(auth)
         })
     })
@@ -92,7 +99,8 @@ const authenticate=(userid, password, mapper, cb)=>{
         user.policyGroups=mapper(membership)
         return cb(null,user)
     }).catch((err)=>{
-        if(err.message==="getaddrinfo ENOTFOUND corp.rgbk.com corp.rgbk.com:389" && process.env.NODE_ENV !== 'production'){
+        console.log(err)
+        if((err.message==="getaddrinfo ENOTFOUND corp.rgbk.com corp.rgbk.com:389" || err.message==="Timeout")&& process.env.NODE_ENV !== 'production'){
             return cb(null, {cn:"Test Person", policyGroups:["MRMVAnalyst"]});
         }
         return cb(err, null);
