@@ -9,7 +9,7 @@ const removeFromSession=inRamDb.removeFromSession
 const getFromSession=inRamDb.getFromSession
 const auth=require('./auth')
 const sql=require('./testSql.js')
-if(process.env.NODE_ENV==='development'||undefined){
+if(process.env.NODE_ENV==='development'||process.env.NODE_ENV===undefined){
     sql.init()
 }
 let app = express();
