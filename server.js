@@ -9,7 +9,7 @@ const removeFromSession=inRamDb.removeFromSession
 const getFromSession=inRamDb.getFromSession
 const auth=require('./auth')
 const sql=require('./testSql.js')
-if(process.env.NODE_ENV==='development'){
+if(process.env.NODE_ENV==='development'||undefined){
     sql.init()
 }
 let app = express();
@@ -37,8 +37,6 @@ const transformNormalizedToKey=(associates)=>{
 const close=()=>{
     serverInstance.close()
 }
-
-
 const api=(sqlInstance)=>{
     //sqlInstance=sqlInstance?sqlInstance:sql
     const GroupsAllowed=(groups)=>auth.handleGroups(groups, sqlInstance)
@@ -51,7 +49,6 @@ const api=(sqlInstance)=>{
             winston.info('return /associates')
             res.send(transformNormalizedToKey(result))
         })
-
     })
     app.get("/skills", GroupsAllowed(["MRMV"]), (req, res)=>{//these are "static"
         winston.info('called /skills')
