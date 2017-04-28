@@ -30,7 +30,7 @@ const transformNormalizedToKey=(associates)=>{
             aggr[aggrLength-1].skills.push(curr.skill)
         }
         else{
-            aggr.push({name:`Name ${aggrLength+1}`, id:curr.id, skills:[curr.skill]})
+            aggr.push({cn:`Name ${aggrLength+1}`, id:curr.id, skills:[curr.skill]})
         }
         return aggr
     }, [])

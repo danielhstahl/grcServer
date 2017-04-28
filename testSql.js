@@ -31,7 +31,7 @@ const TestSelection=()=>{
 }
 
 const CreateAssociates=`CREATE TABLE Associates(
-id varchar(10) constraint associateId primary key
+    id varchar(10) constraint associateId primary key
 );`
 
 const CreateSkillCategory=`CREATE TABLE SkillCategory(
